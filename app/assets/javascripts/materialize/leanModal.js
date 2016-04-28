@@ -21,7 +21,7 @@
         ready: undefined,
         complete: undefined,
         dismissible: true,
-        starting_top: '4%'
+        starting_top: '0%'
       },
       $modal = $(this);
 
@@ -71,7 +71,8 @@
 
       // Define Bottom Sheet animation
       if ($modal.hasClass('bottom-sheet')) {
-        $modal.velocity({bottom: "0", opacity: 1}, {
+        //Add top
+        $modal.velocity({bottom: "0", top: "0", opacity: 1}, {
           duration: options.in_duration,
           queue: false,
           ease: "easeOutCubic",
@@ -106,7 +107,8 @@
   $.fn.extend({
     closeModal: function(options) {
       var defaults = {
-        out_duration: 250,
+        //Change from 250
+        out_duration: 50,
         complete: undefined
       },
       $modal = $(this),
@@ -130,7 +132,8 @@
 
       // Define Bottom Sheet animation
       if ($modal.hasClass('bottom-sheet')) {
-        $modal.velocity({bottom: "-100%", opacity: 0}, {
+        //Change from bottom: "-100%"
+        $modal.velocity({bottom: "0", opacity: 0}, {
           duration: options.out_duration,
           queue: false,
           ease: "easeOutCubic",

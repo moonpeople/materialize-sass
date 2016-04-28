@@ -100,7 +100,7 @@
         });
       }
 
-      // Define Bottom Sheet animation
+      // Modal static
       if ($modal.hasClass('modal-static')) {
         //Add top
         $modal.velocity({opacity: 1}, {
@@ -200,7 +200,8 @@
         );
       }
 
-      if ($modal.hasClass('static')) {
+      // Modal static
+      if ($modal.hasClass('modal-static')) {
         //Change from bottom: "-100%"
         $modal.velocity({opacity: 0}, {
           duration: options.out_duration,

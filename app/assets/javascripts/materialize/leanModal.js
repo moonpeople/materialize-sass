@@ -104,9 +104,8 @@
       if ($modal.hasClass('modal-static')) {
         //Add top
         $modal.velocity({opacity: 1}, {
-          duration: options.in_duration,
+          duration: 0,
           queue: false,
-          ease: "easeOutCubic",
           // Handle modal ready callback
           complete: function() {
             if (typeof(options.ready) === "function") {
@@ -116,12 +115,11 @@
         });
       }
       else {
-        $.Velocity.hook($modal, "scaleX", 0.7);
+        $.Velocity.hook($modal, "scaleX", 1);
         $modal.css({ top: options.starting_top });
         $modal.velocity({top: "10%", opacity: 1, scaleX: '1'}, {
-          duration: options.in_duration,
+          duration: 0,
           queue: false,
-          ease: "easeOutCubic",
           // Handle modal ready callback
           complete: function() {
             if (typeof(options.ready) === "function") {
@@ -139,7 +137,7 @@
     closeModal: function(options) {
       var defaults = {
         //Change from 250
-        out_duration: 50,
+        out_duration: 250,
         complete: undefined
       },
       $modal = $(this),
@@ -204,9 +202,8 @@
       if ($modal.hasClass('modal-static')) {
         //Change from bottom: "-100%"
         $modal.velocity({opacity: 0}, {
-          duration: options.out_duration,
+          duration: 0,
           queue: false,
-          ease: "easeOutCubic",
           // Handle modal ready callback
           complete: function() {
             $overlay.css({display:"none"});
@@ -222,8 +219,8 @@
       }
       else {
         $modal.velocity(
-          { top: options.starting_top, opacity: 0, scaleX: 0.7}, {
-          duration: options.out_duration,
+          { top: options.starting_top, opacity: 0, scaleX: 1}, {
+          duration: 0,
           complete:
             function() {
 

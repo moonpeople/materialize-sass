@@ -21,7 +21,7 @@
         ready: undefined,
         complete: undefined,
         dismissible: true,
-        starting_top: '0%'
+        starting_top: '0'
       },
       $modal = $(this);
 
@@ -84,6 +84,20 @@
           }
         });
       }
+      else if ($modal.hasClass('modal-static')) {
+        //Add top
+        $modal.velocity({opacity: 1}, {
+          duration: 0,
+          queue: false,
+          // Handle modal ready callback
+          complete: function() {
+            if (typeof(options.ready) === "function") {
+              options.ready();
+            }
+          }
+        });
+      }
+
       else {
         $.Velocity.hook($modal, "scaleX", 0.7);
         $modal.css({ top: options.starting_top });
@@ -99,37 +113,6 @@
           }
         });
       }
-
-      // Modal static
-      if ($modal.hasClass('modal-static')) {
-        //Add top
-        $modal.velocity({opacity: 1}, {
-          duration: 0,
-          queue: false,
-          // Handle modal ready callback
-          complete: function() {
-            if (typeof(options.ready) === "function") {
-              options.ready();
-            }
-          }
-        });
-      }
-      else {
-        $.Velocity.hook($modal, "scaleX", 1);
-        $modal.css({ top: options.starting_top });
-        $modal.velocity({top: "10%", opacity: 1, scaleX: '1'}, {
-          duration: 0,
-          queue: false,
-          // Handle modal ready callback
-          complete: function() {
-            if (typeof(options.ready) === "function") {
-              options.ready();
-            }
-          }
-        });
-      }
-
-
     }
   });
 
@@ -179,27 +162,7 @@
           }
         });
       }
-      else {
-        $modal.velocity(
-          { top: options.starting_top, opacity: 0, scaleX: 0.7}, {
-          duration: options.out_duration,
-          complete:
-            function() {
-
-              $(this).css('display', 'none');
-              // Call complete callback
-              if (typeof(options.complete) === "function") {
-                options.complete();
-              }
-              $overlay.remove();
-              _stack--;
-            }
-          }
-        );
-      }
-
-      // Modal static
-      if ($modal.hasClass('modal-static')) {
+      else if ($modal.hasClass('bottom-sheet')) {
         //Change from bottom: "-100%"
         $modal.velocity({opacity: 0}, {
           duration: 0,
@@ -219,8 +182,8 @@
       }
       else {
         $modal.velocity(
-          { top: options.starting_top, opacity: 0, scaleX: 1}, {
-          duration: 0,
+          { top: options.starting_top, opacity: 0, scaleX: 0.7}, {
+          duration: options.out_duration,
           complete:
             function() {
 

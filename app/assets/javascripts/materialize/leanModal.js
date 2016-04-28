@@ -72,7 +72,38 @@
       // Define Bottom Sheet animation
       if ($modal.hasClass('bottom-sheet')) {
         //Add top
-        $modal.velocity({bottom: "0", top: "0", opacity: 1}, {
+        $modal.velocity({bottom: "0", opacity: 1}, {
+          duration: options.in_duration,
+          queue: false,
+          ease: "easeOutCubic",
+          // Handle modal ready callback
+          complete: function() {
+            if (typeof(options.ready) === "function") {
+              options.ready();
+            }
+          }
+        });
+      }
+      else {
+        $.Velocity.hook($modal, "scaleX", 0.7);
+        $modal.css({ top: options.starting_top });
+        $modal.velocity({top: "10%", opacity: 1, scaleX: '1'}, {
+          duration: options.in_duration,
+          queue: false,
+          ease: "easeOutCubic",
+          // Handle modal ready callback
+          complete: function() {
+            if (typeof(options.ready) === "function") {
+              options.ready();
+            }
+          }
+        });
+      }
+
+      // Define Bottom Sheet animation
+      if ($modal.hasClass('modal-static')) {
+        //Add top
+        $modal.velocity({opacity: 1}, {
           duration: options.in_duration,
           queue: false,
           ease: "easeOutCubic",
@@ -134,6 +165,44 @@
       if ($modal.hasClass('bottom-sheet')) {
         //Change from bottom: "-100%"
         $modal.velocity({bottom: "0", opacity: 0}, {
+          duration: options.out_duration,
+          queue: false,
+          ease: "easeOutCubic",
+          // Handle modal ready callback
+          complete: function() {
+            $overlay.css({display:"none"});
+
+            // Call complete callback
+            if (typeof(options.complete) === "function") {
+              options.complete();
+            }
+            $overlay.remove();
+            _stack--;
+          }
+        });
+      }
+      else {
+        $modal.velocity(
+          { top: options.starting_top, opacity: 0, scaleX: 0.7}, {
+          duration: options.out_duration,
+          complete:
+            function() {
+
+              $(this).css('display', 'none');
+              // Call complete callback
+              if (typeof(options.complete) === "function") {
+                options.complete();
+              }
+              $overlay.remove();
+              _stack--;
+            }
+          }
+        );
+      }
+
+      if ($modal.hasClass('static')) {
+        //Change from bottom: "-100%"
+        $modal.velocity({opacity: 0}, {
           duration: options.out_duration,
           queue: false,
           ease: "easeOutCubic",

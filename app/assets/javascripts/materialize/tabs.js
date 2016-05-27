@@ -109,6 +109,11 @@
 
         // Prevent the anchor's default click action
         e.preventDefault();
+
+        
+        if ( !$(this).attr("target") ) {
+          e.preventDefault();
+        }
       });
     });
 
